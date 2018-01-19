@@ -1,0 +1,65 @@
+\documentclass{article}
+
+\usepackage{hyperref}
+\usepackage{amsmath}
+
+% Page layout
+\hoffset -0in
+\voffset -1in
+\oddsidemargin 0in
+\textheight 10in
+\textwidth 6.3in
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+	\section*{COMPUTATIONAL METHODS IN MECHANICS: Task 1}
+	Vesa-Ville Hurskainen, 19 Jan 2018
+	
+	\section*{Introduction}
+	This is a report on the first assignment of the course \textit{Computational Methods in Mechanics}, concerning the trapezoidal integration rule. A MATLAB script with an implementation of the rule (\texttt{integral\_trapezoid.m}) was provided and six tasks involving the script were given. The tasks are as follows:
+	
+	\begin{enumerate}
+		\setlength\itemsep{0pt}
+		\item To test that the script works correctly.
+		\item To use GitHub.
+		\item To compare the script with built-in MATLAB procedure.
+		\item To test the debugger.
+		\item To speed up the script.
+		\item To use the script to compute a 2D integral.
+	\end{enumerate}
+	
+	\section*{Methods}
+	In order to complete Task 5, an optimized script (\texttt{integral\_trapezoid\_optimized.m}) was written, employing vectorization to speed up computation. In addition, two test scripts (\texttt{test\_integral\_1D.m} and \texttt{test\_integral\_2D.m}) were written in order to test and compare the various different types of integration functions in one- and two-dimensional cases. There, the MATLAB profiler was used to investigate computation times and the MATLAB debugger to find errors. A function was chosen to test the integration procedures in each case. The functions, along with their analytical definite integrals, are as follows:
+	\begin{align}
+	\int_{0}^{1} \textrm{sin}(x)~dx &= 1-\textrm{cos}(1) \\
+	\int_{0}^{1} \int_{0}^{1} \textrm{sin}(x) + \textrm{cos}(y)~dx~dy &= 1 + \textrm{sin}(1) - \textrm{cos}(1)
+	\end{align}
+	
+	\section*{Results}
+	All employed scripts can be found in a \href{https://github.com/VesaVilleHurskainen/cmim2018}{GitHub repository}. Numerical results are presented in Table~\ref{tab:results}.
+	 \begin{table}[ht]
+	 	\def\arraystretch{1.3}
+		\begin{center}
+			\begin{tabular}{|c|c|c|c||c|c|c|}
+				\hline
+				\multicolumn{4}{|c||}{$\int_{0}^{1} \textrm{sin}(x) dx$} & \multicolumn{3}{c|}{$\int_{0}^{1} \int_{0}^{1} \textrm{sin}(x) + \textrm{cos}(y) dx~dy$}\\
+				\hline
+				Integration                    & Steps  & Result    & Avg. time & Integration                        & Steps  & Result \\
+				\hline
+				Analytical                     &        & 0.4596977 &           & Analytical                &                    & 1.3011687 \\
+				MATLAB \texttt{trapz} & $10^6$ & 0.4596977 & 35 ms               & MATLAB \texttt{integral2} & 1000 / D & 1.3011687 \\
+				Original script                & $10^6$ & 0.4596977 & 1100 ms   & Original script           & (defaults) & 1.3011687 \\
+				Optimized script               & $10^6$ & 0.4596977 & 20 ms &&&\\
+				\hline
+			\end{tabular}
+			\caption{Comparison of numerical results yielded by test scripts.}
+			\label{tab:results}
+		\end{center}
+	\end{table}
+	\vspace{-1cm}
+
+	\section*{Analysis}
+	Tasks 2 and 4 were completed during coding and the completion of Tasks 1 and 3 can be verified by comparing the results presented in Table~\ref{tab:results}. The script appears to work correctly, since it produces results that coincide with the analytical results in the one-dimensional case. However, the script is unoptimized and therefore significantly slower than than the MATLAB function \texttt{trapz}. On the other hand, the optimized script is even faster than the built-in script when using vectorized functions, which completes Task 5. Finally, as Table~\ref{tab:results} shows, in the two-dimensional case the same result was gained from both the script and the built-in MATLAB function \texttt{integral2}, which completes Task 6. Therefore, all tasks are complete.\\
+\end{document}
