@@ -1,0 +1,9 @@
+Assignment for week 2:
+
+- Use github.
+- Create a Matlab code that solves mass-spring-damper system.
+- Compare exact solution for free and damped vibrations with different ODE solvers.
+- Reduce the error in position by adjusting solver settings.
+- Analyze forced and slightly damped vibrations with time-varying harmonic force.
+What happens when force frequency passes through damped natural frequency of the system?
+How does the rate of change of the frequency affect the solution?
