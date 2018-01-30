@@ -17,7 +17,7 @@ rtol = 1e-6;
 atol = 1e-9;
 
 % Define function for force frequency
-omega = @(t) 2*t;
+omega = @(t) 4*t;
 
 
 % Compute natural frequencies
