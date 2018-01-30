@@ -12,8 +12,8 @@ y0 = [0.1;0];           % Starting position and veloctiy
 tspan = 0 : 0.01 : 10;  % Solved timespan
 
 % Tolerances (set to 0 to use default parameters)
-rtol = 1e-6;
-atol = 1e-9;
+rtol = 0;
+atol = 0;
 
 
 % Compute natural frequencies

@@ -2,6 +2,8 @@
 
 \usepackage{hyperref}
 \usepackage{amsmath}
+\usepackage{subcaption}
+\usepackage{graphicx}
 
 % Page layout
 \hoffset -0in
@@ -11,7 +13,10 @@
 \textwidth 6.3in
 
 \setlength{\parindent}{0pt}
-\pagestyle{empty}
+\setlength{\intextsep}{10pt}
+%\pagestyle{empty}
+
+\graphicspath{{figures/}}
 
 \begin{document}
 	\section*{COMPUTATIONAL METHODS IN MECHANICS: Task 2}
@@ -45,8 +50,86 @@
 	where damping ratio $\zeta = \frac{c}{2 \sqrt{km}}$, undamped natural frequency $\omega_n = \sqrt{\frac{k}{m}}$ and damped natural frequency $\omega_d = \omega_n \sqrt{1-\zeta^2}$. The initial values for displacement and velocity are $x_0$ and $\dot{x}_0$, respectively.
 	
 	\section*{Results}
-	The employed scripts can be found in a \href{https://github.com/VesaVilleHurskainen/cmim2018}{GitHub repository}.
+	poop
 
 	\section*{Analysis}
-	aa
+	The completion of the second and third tasks can be verified from Figure~\ref*{fig:response}. The numerical and analytical solutions coincide with a fair degree of accuracy in all cases, but consistently the best results were gained using the solver ode45 and the worst using ode23. The completion of task four can be verified from Table~\ref{tab:error_comparison}, which shows a significant decrease in error with tighter tolerances.\\
+	
+	The fifth task required ... ~\ref{fig:forced_response} \\
+	
+	The first task was completed by uploading the employed scripts and the source files of this report into a \href{https://github.com/VesaVilleHurskainen/cmim2018}{GitHub repository} using the MATLAB-integrated functions. Therefore, all tasks are judged to be complete.
+	
+	\clearpage
+		\begin{figure}[h]
+		\centering
+		\begin{subfigure}[t]{0.45\textwidth}
+			\includegraphics[width=\textwidth]{response_comparison_undamped.png}
+			\caption{Response, $\zeta = 0$.}
+		\end{subfigure}
+		~
+		\begin{subfigure}[t]{0.45\textwidth}
+			\includegraphics[width=\textwidth]{error_comparison_damped.png}
+			\caption{Position error, $\zeta = 0$.}
+		\end{subfigure}
+		
+		\begin{subfigure}[t]{0.45\textwidth}
+			\includegraphics[width=\textwidth]{response_comparison_damped.png}
+			\caption{Response, $\zeta = 0.1$.}
+		\end{subfigure}
+		~
+		\begin{subfigure}[t]{0.45\textwidth}
+			\includegraphics[width=\textwidth]{error_comparison_damped.png}
+			\caption{Position error, $\zeta = 0.1$.}
+		\end{subfigure}
+		\caption{System response comparison, undamped and damped cases. Default solver options.}
+		\label{fig:response}
+	\end{figure}
+	
+	\begin{table}[h]
+		\def\arraystretch{1.2}
+		\begin{subtable}[t]{0.45\textwidth}
+			\centering
+			\begin{tabular}{|l|l|l|}
+				\hline
+				Solver & $\zeta = 0$ & $\zeta = 0.1$\\
+				\hline
+				ode45  & 1016 & 621.4 \\
+				ode23  & 5042 & 3100 \\
+				ode113 & 1482 & 953.4 \\
+				\hline
+			\end{tabular}
+			\caption{Default options.}
+		\end{subtable}
+		~
+		\begin{subtable}[t]{0.45\textwidth}
+			\centering
+			\begin{tabular}{|l|l|l|}
+				\hline
+				Solver & $\zeta = 0$ & $\zeta = 0.1$\\
+				\hline
+				ode45  & 0.5887 & 0.3609 \\
+				ode23  & 4.506 s & 2.770 \\
+				ode113 & 0.6283 & 0.7028 \\
+				\hline
+			\end{tabular}
+			\caption{AbsTol = 1e-9, RelTol = 1e-3 .}
+		\end{subtable}
+		\caption{Comparison of maximum errors [$10^{-6}$ m].}
+		\label{tab:error_comparison}
+	\end{table}
+	
+	\begin{figure}[h]
+		\centering
+		\begin{subfigure}[t]{0.45\textwidth}
+			\includegraphics[width=\textwidth]{forced_response_slow.png}
+			\caption{Response, $\omega = 2 t$ .}
+		\end{subfigure}
+		~
+		\begin{subfigure}[t]{0.45\textwidth}
+			\includegraphics[width=\textwidth]{forced_response_fast.png}
+			\caption{Response, $\omega = 4 t$ .}
+		\end{subfigure}
+		\caption{Forced response comparison. Solver ode45, default options. Vertical line designates damped natural frequency.}
+		\label{fig:forced_response}
+	\end{figure}
 \end{document}

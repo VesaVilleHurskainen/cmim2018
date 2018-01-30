@@ -42,7 +42,7 @@ odefun = @(t,y) [y(2) ; (- k*y(1) - c*y(2) + A*sin(omega(t)*t))/m];
 figure
 plot(tspan,y(:,1));
 hold on
-plot([t_wd,t_wd],ylim);
+plot([t_wd,t_wd],ylim,'r','LineWidth',2);
 grid on
 title('System response')
 ylabel('Displacement [m]')
