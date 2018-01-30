@@ -1,0 +1,52 @@
+\documentclass{article}
+
+\usepackage{hyperref}
+\usepackage{amsmath}
+
+% Page layout
+\hoffset -0in
+\voffset -1in
+\oddsidemargin 0in
+\textheight 10in
+\textwidth 6.3in
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+	\section*{COMPUTATIONAL METHODS IN MECHANICS: Task 2}
+	Vesa-Ville Hurskainen, 30 Jan 2018
+	
+	\section*{Introduction}
+	This is a report on the second assignment of the course \textit{Computational Methods in Mechanics}, concerning the numerical solution of the dynamic response of a mass-spring-damper system using MATLAB. Five tasks were given, which are as follows:
+	
+	\begin{enumerate}
+		\setlength\itemsep{0pt}
+		\item To use GitHub.
+		\item To create a MATLAB code that solves a mass-spring-damper system.
+		\item To compare the exact solution for free and damped vibrations using different ODE solvers.
+		\item To reduce the error in position by adjusting solver settings.
+		\item To analyze forced and slightly damped vibrations with harmonic force, and investigate what happens when the force frequency passes the damped natural frequency and how the rate of change of the force frequency affects the solution.
+	\end{enumerate}
+	
+	\section*{Methods}
+	Denoting displacement with $x$ and external force with $F$, the equation of motion for the mass-spring-damper system can be written as
+	\begin{equation}
+		m \ddot{x} + c \dot{x} + k x  = F
+	\end{equation}
+	where $m$ is mass, $c$ is viscous damping coefficient and $k$ is spring coefficient. Here, the force was given as
+	\begin{equation}
+		F(t) = A \sin(\omega(t) t)
+	\end{equation}
+	where $A$ is harmonic force amplitude and $\omega$ is frequency. The analytically derived response function of the system, presuming that $F=0$ and system is underdamped (damping ratio $<$ 1), can be written as
+	\begin{equation}
+		x(t) = e^{-\zeta \omega_n t} \left(\frac{\dot{x}_0 + \zeta \omega_n x_0}{\omega_d} \sin(\omega_d t) + x_0 \cos(\omega_d t)\right)
+	\end{equation}
+	where damping ratio $\zeta = \frac{c}{2 \sqrt{km}}$, undamped natural frequency $\omega_n = \sqrt{\frac{k}{m}}$ and damped natural frequency $\omega_d = \omega_n \sqrt{1-\zeta^2}$. The initial values for displacement and velocity are $x_0$ and $\dot{x}_0$, respectively.
+	
+	\section*{Results}
+	The employed scripts can be found in a \href{https://github.com/VesaVilleHurskainen/cmim2018}{GitHub repository}.
+
+	\section*{Analysis}
+	aa
+\end{document}
