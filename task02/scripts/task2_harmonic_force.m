@@ -1,66 +1,49 @@
 clear
 close all
 
+
 % System parameters
 m = 1;
 k = 100;
 c = 0.1;
-A = 0;
+A = 10;
 
 % Computation parameters
-y0 = [0.1;0];           % Starting position and veloctiy
+y0 = [0;0];           % Starting position and veloctiy
 tspan = 0 : 0.01 : 10;  % Solved timespan
 
-% Equation of motion for spring-mass-damper: mx'' + cx' + kx = F
-% Reduced to 1st order ODE system (y1 = x, y2 = x') :
-omega = @(t) 0;
-odefun = @(t,y) [y(2) ; - k/m * y(1) - c/m * y(2) + A/m * sin(omega(t)*t)];
+% Tolerances (set to 0 to use default parameters)
+rtol = 1e-6;
+atol = 1e-9;
 
-% Compute analytical results for comparison
+% Define function for force frequency
+omega = @(t) 2*t;
+
+
+% Compute natural frequencies
 dr = c/(2*sqrt(k*m));   % Damping ratio
 wn = sqrt(k/m);         % Undamped natural frequency
 wd = wn*sqrt(1-dr^2);   % Damped natural frequency
 
-% Analytical response function (underdamped case, F = 0)
-anfun = @(t,x0,xd0) exp(-dr*wn*t)*((xd0 + dr*wn*x0)/wd*sin(wd*t) + x0*cos(wd*t));
+% Compute time when force frequency passes damped natural frequency
+wdfun = @(t) omega(t)-wd;
+t_wd = fzero(wdfun,0);
 
-% Compute values using analytical function
-y_an = zeros(length(tspan),1);
-for i=1:length(tspan)
-    y_an(i) = anfun(tspan(i),y0(1),y0(2));
-end
+% Equation of motion for spring-mass-damper: mx'' + cx' + kx = F
+% Reduced to 1st order ODE system (y1 = x, y2 = x') :
+odefun = @(t,y) [y(2) ; (- k*y(1) - c*y(2) + A*sin(omega(t)*t))/m];
 
 % Choose solver and solver options
-opts = odeset('RelTol',
-[~,y_45] = ode45(odefun,tspan,y0);
-[~,y_23] = ode23(odefun,tspan,y0);
-[~,y_113] = ode113(odefun,tspan,y0);
+% opts = odeset('RelTol',rtol,'AbsTol',atol);
+[~,y] = ode45(odefun,tspan,y0);
 
-% Plot analytically and numerically solved response
+
+% Plot response
 figure
-plot(tspan,y_an);
+plot(tspan,y(:,1));
 hold on
-plot(tspan,y_45(:,1))
-plot(tspan,y_23(:,1))
-plot(tspan,y_113(:,1))
-hold off
+plot([t_wd,t_wd],ylim);
 grid on
 title('System response')
 ylabel('Displacement [m]')
 xlabel('Time [s]')
-legend('Analytical','ode45','ode23','ode113')
-
-% Compute and plot position error
-err_45 = y_an-y_45(:,1);
-err_23 = y_an-y_23(:,1);
-err_113 = y_an-y_113(:,1);
-figure
-plot(tspan,err_45);
-hold on
-plot(tspan,err_23);
-plot(tspan,err_113);
-grid on
-title('Position error, default settings')
-ylabel('Error [m]')
-xlabel('Time [s]')
-legend('ode45','ode23','ode113')
