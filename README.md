@@ -1,4 +1,6 @@
-# cmim2018
-Computational Methods in Mechanics 2018
+# Computational Methods in Mechanics 2018
 
-This is a modification!
+This is an repository for the MATLAB code and report files generated during the course Computational Methods in Mechanics.
+
+Vesa-Ville Hurskainen
+Lappeenranta University of Technology
