@@ -52,7 +52,7 @@
 	To compute the required results, two MATLAB scripts were written. The first (\texttt{task2\_solver\_comparison.m}) was written to compare the system responses produced using different ODE solvers to the analytical results, completing tasks two to four. The second script (\texttt{task2\_harmonic\_force.m}) was made to analyze the response of the system with harmonic force, completing task five.
 	
 	\section*{Results}
-	The following system parameters were used in the computations: $m$ = 1 kg, $k$ = 100 N/m, $c$ = 0.1 Ns/m. A comparison of undamped and damped system responses with different ODE solvers is presented in Figure~\ref*{fig:response}. Following this, Table~\ref*{tab:error_comparison} presents a comparison between the maximum errors produced by different solvers with two different sets of solver options. Finally, a comparison of the system's forced responses with different frequencies of harmonic force is presented in Figure~\ref*{fig:forced_response}.
+	The following system parameters were used: $m$ = 1 kg, $k$ = 100 N/m, $c$ = 0.1 Ns/m. Output time vector was defined as $0:0.01:10$ s. A comparison of undamped and damped system responses with different ODE solvers is presented in Figure~\ref*{fig:response}. Following this, Table~\ref*{tab:error_comparison} presents a comparison between the maximum errors produced by the solvers with two different sets of solver options. Finally, a comparison of the system's forced responses with different frequencies of harmonic force is presented in Figure~\ref*{fig:forced_response}.
 
 	\section*{Analysis}
 	The completion of the second and third tasks given in the instructions can be verified from Figure~\ref*{fig:response}. The numerical and analytical solutions coincide with a fair degree of accuracy in all cases, but consistently the best results were gained using the solver ode45 and the worst using ode23. The completion of task four can be verified from Table~\ref*{tab:error_comparison}, which shows a significant decrease in error with tighter tolerances.\\
@@ -132,7 +132,7 @@
 			\includegraphics[width=\textwidth]{forced_response_fast.png}
 			\caption{Response, $\omega = 4 t$ .}
 		\end{subfigure}
-		\caption{Forced response comparison, $A$ = 10 N. Solver ode45, default options. Vertical line = $\omega_d$.}
+		\caption{Forced response, $A$ = 10 N, $\zeta$ = 0.1 . Solver ode45, default options. Vertical line = $\omega_d$.}
 		\label{fig:forced_response}
 	\end{figure}
 \end{document}
