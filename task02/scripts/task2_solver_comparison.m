@@ -62,14 +62,15 @@ xlabel('Time [s]')
 legend('Analytical','ode45','ode23','ode113')
 
 % Compute and plot position error
-err_45 = y_an-y_45(:,1);
-err_23 = y_an-y_23(:,1);
-err_113 = y_an-y_113(:,1);
+err_45 = y_45(:,1)-y_an;
+err_23 = y_23(:,1)-y_an;
+err_113 = y_113(:,1)-y_an;
 figure
 plot(tspan,err_45);
 hold on
 plot(tspan,err_23);
 plot(tspan,err_113);
+hold off
 grid on
 title('Position error')
 ylabel('Error [m]')
