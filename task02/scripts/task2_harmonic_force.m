@@ -12,10 +12,6 @@ A = 10;
 y0 = [0;0];           % Starting position and veloctiy
 tspan = 0 : 0.01 : 10;  % Solved timespan
 
-% Tolerances (set to 0 to use default parameters)
-rtol = 1e-6;
-atol = 1e-9;
-
 % Define function for force frequency
 omega = @(t) 4*t;
 
