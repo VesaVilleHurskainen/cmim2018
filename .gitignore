@@ -29,3 +29,6 @@ octave-workspace
 *.log
 *.synctex.gz
 *.aux
+
+# Windows Thumbs.db files
+Thumbs.db
