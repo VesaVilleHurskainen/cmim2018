@@ -16,12 +16,14 @@ x0 = A;
 xd0 = 0;
 
 % Equation of motion
-EQM = m*xdd + c*xd + k*x == 0;
+EQM = m*xdd + c*xd + k*x == f;
 
 % Solve
 fpos = dsolve(EQM,[x(0) == x0, xd(0) == xd0])
 
-% Numerical soulution
-fsub = subs(fpos,[A,m,k,c],[0.1,1,100,0.1])
+syms cc zeta omega real
 
-fplot(fsub)
+fpos_rewrite = simplify(expand(subs(subs(simplify(subs(subs(fpos, 4*k*m, cc*cc), c, zeta*cc)),cc,2*sqrt(k*m)),sqrt(k/m),omega)))
+
+% Numerical solution
+fsub = subs(fpos_rewrite,[A,m,k,c],[0.1,1,100,0.1])
