@@ -28,12 +28,17 @@
 	\href{https://github.com/VesaVilleHurskainen/cmim2018}{GitHub repository}
 
 	\section*{Introduction}
-	This is a report of the fourth assignment of the course \textit{Computational Methods in Mechanics}. The assignment consists of ... tasks, which are as follows:
+	This is a report of the fourth assignment of the course \textit{Computational Methods in Mechanics}, concerning numerical integration. The assignment consists of six tasks, which are as follows:
 	
 	\begin{enumerate}
 		\setlength\itemsep{0pt}
-		\item To use GitHub.
-		\item ...
+		\item To write the equations of motion for a three-mass-three-spring system.
+		\item To numerically calculate the system's natural frequencies.
+		\item To investigate how removing the first spring affects the natural frequencies.
+		\item To solve the system with nonzero initial conditions using four solvers (odeRK4, odeSIE, ode45, ode15s) and compare accuracy and
+		efficiency.
+		\item To repeat the computations using nodal coordinates and compare the results with the original system.
+		\item To write a report.
 	\end{enumerate}
 
 	\section*{Methods}
@@ -60,9 +65,27 @@
 	\end{align}
 	
 	\section*{Results}
-	...
+	The numerically calculated natural frequencies of the original and modified system are presented in Table~\ref*{tab:natural_frequencies}.
+	
+	\begin{table}[htb]
+		\centering
+		\begin{tabular}{|r|r|}
+			\hline
+			Original system & Modified: $k_1 = 0$ \\
+			\hline
+			51.08 rad/s & 0 rad/s \\
+			117.5 rad/s & 94.38 rad/s \\
+			166.6 rad/s & 158.9 rad/s \\
+			\hline
+		\end{tabular}
+		\caption{Numerically computed natural frequencies of the system.}
+		\label{tab:natural_frequencies}
+	\end{table}
 
 	\section*{Analysis}
-	...
+	As Table~\ref*{tab:natural_frequencies} shows, the first natural frequency of the system goes to zero when the first spring is removed. This was expected, since doing so removes all stiffness constricting the system's movement in relation to the reference frame. The other two natural frequencies are also lowered; an expected result of reduced stiffness.
+	
+	\clearpage
+	\section*{Secret extra page: integrator testing}
 	
 \end{document}

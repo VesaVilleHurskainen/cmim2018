@@ -2,11 +2,11 @@ clear
 close all
 
 % Integrator and time settings
-integrator = 'ode45';
+integrator = 'rungeKutta4';
 
 t0 = 0;
 t1 = 1;
-tstep = 0.001;
+tstep = 1e-6;
 
 tspan = t0:tstep:t1;
 
@@ -19,7 +19,7 @@ k2 = 15000;
 k3 = 10000;
 
 % Starting positions and velocities
-y0 = [-0.1,0,0.1,0,0,0]';
+y0 = [0,0,0.1,0,0,0]';
 
 % System mass matrix (point mass system)
 M = diag([m1, m2, m3]);
@@ -32,6 +32,7 @@ K = [k1+k2, -k2,     0
 % Natural frequencies of the system
 [V,A] = eig(K,M);
 omega = sqrt(diag(A));
+disp('Natural frequencies (rad/s)')
 disp(omega)
 
 % Transform to modal coordinates
@@ -69,6 +70,7 @@ elseif strcmp(integrator,'simEuler')
     [t,u,v] = simEuler(fun_f,fun_g,tspan,u0,v0);
     [tp,up,vp] = simEuler(fun_f_modal,fun_g_modal,tspan,up0,vp0);
     y = [u;v];
+    p = [up;vp];
     
 elseif strcmp(integrator,'ode45')   
     [t,y] = ode45(fun,tspan,y0);
@@ -89,11 +91,69 @@ for i = 1:length(tp)
     y_modal(:,i) = [V zeros(size(V)); zeros(size(V)) V] * p(:,i);
 end
 
-% Plot results
+% % Plot displacement results
+% figure
+% plot(t,y(1:3,:),'k-','LineWidth',1.5);
+% grid on
+% ylabel('Displacement [m]')
+% xlabel('Time [s]')
+% formatPlot(gcf,'Times New Roman',12);
+% 
+% figure
+% plot(tp,y_modal(1:3,:),'k-','LineWidth',1.5);
+% grid on
+% ylabel('Displacement [m]')
+% xlabel('Time [s]')
+% formatPlot(gcf,'Times New Roman',12);
+
+% Read reference data from file and adjust data size to match
+% (reference data computed using ode45 with step size 1e-6)
+y_ref_read = load('refdata.mat'); refstep = 1e-6;
+y_ref = y_ref_read.y(:,1:round(tstep/refstep):end);
+clear y_ref_read
+
+% Compute and plot position error of original system
+err_y = y-y_ref;
 figure
-plot(t,y(1:3,:));
+plot(t,err_y(3,:),'k-','LineWidth',1.5);
 grid on
+ylabel('Error y - y_{ref} [m]')
+xlabel('Time [s]')
+% ylim([-5e-3,5e-3])
+formatPlot(gcf,'Times New Roman',12);
+
+% Compute and plot position error with modal coordinate transformation
+err_y_modal = y_modal-y_ref;
+figure
+plot(t,err_y_modal(3,:),'k-','LineWidth',1.5);
+grid on
+ylabel('Error y_{modal} - y_{ref} [m]')
+xlabel('Time [s]')
+% ylim([-5e-3,5e-3])
+formatPlot(gcf,'Times New Roman',12);
+
+% % Compute and plot difference between original and modal results
+% diff_modal = y_modal-y;
+% figure
+% plot(t,diff_modal(3,:),'k-','LineWidth',1.5);
+% grid on
+% ylabel('Difference y_{modal} - y_{original} [m]')
+% xlabel('Time [s]')
+% ylim([-5e-16,5e-16])
+% formatPlot(gcf,'Times New Roman',12);
+
+% Compute and plot system energy drift (original system)
+T_total = zeros(1,length(t));
+for i = 1:length(t)
+    T_potential = 0.5*y(1:3,i)'*K*y(1:3,i);
+    T_kinetic = 0.5*y(4:6,i)'*M*y(4:6,i);
+    T_total(i) = T_potential+T_kinetic;
+end
 
 figure
-plot(tp,y_modal(1:3,:));
+plot(t,T_total,'k-','LineWidth',1.5);
 grid on
+ylabel('Total energy [J]')
+xlabel('Time [s]')
+% ylim([48,52])
+formatPlot(gcf,'Times New Roman',12);
