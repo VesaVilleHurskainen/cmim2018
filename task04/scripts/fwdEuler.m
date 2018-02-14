@@ -1,5 +1,5 @@
 % Forward Euler method
-function [t,y ]= fwdEuler(fun, tspan, y0)
+function [t,y] = fwdEuler(fun, tspan, y0)
 
 t = tspan;
 y = zeros(length(y0),length(tspan));

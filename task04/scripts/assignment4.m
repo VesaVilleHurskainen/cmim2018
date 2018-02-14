@@ -2,7 +2,7 @@ clear
 close all
 
 % Integrator and time settings
-integrator = 'rungeKutta4';
+integrator = 'ode15s';
 
 t0 = 0;
 t1 = 1;
@@ -91,20 +91,20 @@ for i = 1:length(tp)
     y_modal(:,i) = [V zeros(size(V)); zeros(size(V)) V] * p(:,i);
 end
 
-% % Plot displacement results
-% figure
-% plot(t,y(1:3,:),'k-','LineWidth',1.5);
-% grid on
-% ylabel('Displacement [m]')
-% xlabel('Time [s]')
-% formatPlot(gcf,'Times New Roman',12);
-% 
-% figure
-% plot(tp,y_modal(1:3,:),'k-','LineWidth',1.5);
-% grid on
-% ylabel('Displacement [m]')
-% xlabel('Time [s]')
-% formatPlot(gcf,'Times New Roman',12);
+% Plot displacement results
+figure
+plot(t,y(3,:),'k-','LineWidth',1.5);
+grid on
+ylabel('Displacement [m]')
+xlabel('Time [s]')
+formatPlot(gcf,'Times New Roman',14);
+
+figure
+plot(tp,y_modal(3,:),'k-','LineWidth',1.5);
+grid on
+ylabel('Displacement [m]')
+xlabel('Time [s]')
+formatPlot(gcf,'Times New Roman',14);
 
 % Read reference data from file and adjust data size to match
 % (reference data computed using ode45 with step size 1e-6)
@@ -120,7 +120,7 @@ grid on
 ylabel('Error y - y_{ref} [m]')
 xlabel('Time [s]')
 % ylim([-5e-3,5e-3])
-formatPlot(gcf,'Times New Roman',12);
+formatPlot(gcf,'Times New Roman',14);
 
 % Compute and plot position error with modal coordinate transformation
 err_y_modal = y_modal-y_ref;
@@ -130,17 +130,17 @@ grid on
 ylabel('Error y_{modal} - y_{ref} [m]')
 xlabel('Time [s]')
 % ylim([-5e-3,5e-3])
-formatPlot(gcf,'Times New Roman',12);
+formatPlot(gcf,'Times New Roman',14);
 
-% % Compute and plot difference between original and modal results
-% diff_modal = y_modal-y;
-% figure
-% plot(t,diff_modal(3,:),'k-','LineWidth',1.5);
-% grid on
-% ylabel('Difference y_{modal} - y_{original} [m]')
-% xlabel('Time [s]')
+% Compute and plot difference between original and modal results
+diff_modal = y_modal-y;
+figure
+plot(t,diff_modal(3,:),'k-','LineWidth',1.5);
+grid on
+ylabel('Difference y_{modal} - y_{original} [m]')
+xlabel('Time [s]')
 % ylim([-5e-16,5e-16])
-% formatPlot(gcf,'Times New Roman',12);
+formatPlot(gcf,'Times New Roman',14);
 
 % Compute and plot system energy drift (original system)
 T_total = zeros(1,length(t));
@@ -156,4 +156,10 @@ grid on
 ylabel('Total energy [J]')
 xlabel('Time [s]')
 % ylim([48,52])
-formatPlot(gcf,'Times New Roman',12);
+formatPlot(gcf,'Times New Roman',14);
+
+disp('Maximum displacement error of mass 3:')
+disp(max(abs(err_y(3,:))))
+
+disp('Maximum energy drift:')
+disp(max(abs(T_total-T_total(1))))
