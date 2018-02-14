@@ -6,7 +6,7 @@ integrator = 'rungeKutta4';
 
 t0 = 0;
 t1 = 1;
-tstep = 1e-6;
+tstep = 1e-3;
 
 tspan = t0:tstep:t1;
 
