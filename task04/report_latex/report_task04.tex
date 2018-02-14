@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage{subcaption}
 \usepackage{epstopdf}
+\usepackage{bm}
 
 \usepackage{times}
 
@@ -23,7 +24,7 @@
 
 \begin{document}
 	\section*{COMPUTATIONAL METHODS IN MECHANICS: Task 4}
-	Vesa-Ville Hurskainen, ?? Feb 2018\\
+	Vesa-Ville Hurskainen, 14 Feb 2018\\
 	\href{https://github.com/VesaVilleHurskainen/cmim2018}{GitHub repository}
 
 	\section*{Introduction}
@@ -36,8 +37,28 @@
 	\end{enumerate}
 
 	\section*{Methods}
-	...
-
+	Using Newton's second law, we can derive the following system of equations of motion for the three-mass system: 
+	\begin{equation}
+		\begin{aligned}
+		m_1 \ddot{x}_1 & = - x_1 k_1 + (x_2 - x_1) k_2 \\
+		m_2 \ddot{x}_2 & = - (x_2 - x_1) k_2 + (x_3 - x_2) k_3\\
+		m_3 \ddot{x}_3 & = - (x_3 - x_2) k_3
+		\end{aligned}
+	\end{equation}
+	Transforming the system of linear equations into matrix form, we get the matrix equation:
+	\begin{equation}
+		\mathbf{M} \ddot{\bm{x}} + \mathbf{K} \bm{x} = \bm{0}
+	\end{equation}
+	where the mass matrix $\mathbf{M}$ and stiffness matrix $\mathbf{K}$ are written as:
+	\begin{align}
+		\mathbf{M} &= \text{diag}(m_1, m_2, m_3) \\
+		\mathbf{K} &= \begin{bmatrix}
+		k_1 + k_2 & -k_2 & 0 \\
+		-k_2 & k_2 + k_3 & - k_3 \\
+		0 & -k_3 & k_3
+		\end{bmatrix}
+	\end{align}
+	
 	\section*{Results}
 	...
 
