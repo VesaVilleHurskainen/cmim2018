@@ -7,6 +7,7 @@
 \usepackage{epstopdf}
 
 \usepackage{times}
+\usepackage{bm}
 
 % Page layout
 \hoffset -0in
@@ -22,26 +23,45 @@
 \graphicspath{{figures/}}
 
 \begin{document}
-	\section*{COMPUTATIONAL METHODS IN MECHANICS: Task 4}
+	\section*{COMPUTATIONAL METHODS IN MECHANICS: Assignment 5}
 	Vesa-Ville Hurskainen, ?? Feb 2018\\
 	\href{https://github.com/VesaVilleHurskainen/cmim2018}{GitHub repository}
 
 	\section*{Introduction}
-	This is a report of the fourth assignment of the course \textit{Computational Methods in Mechanics}. The assignment consists of ... tasks, which are as follows:
+	This is a report of the fifth assignment of the course \textit{Computational Methods in Mechanics}. The assignment consists of five tasks, which are as follows:
 	
 	\begin{enumerate}
 		\setlength\itemsep{0pt}
-		\item To use GitHub.
-		\item ...
+		\item To implement backward Euler method using Newton-Raphson.
+		\item To derive equations of motion for a given mass-crank system.
+		\item To derive Jacobian matrix for the system using symbolic computations.
+		\item To solve the system using backward Euler method and the previously derived Jacobian.
+		\item To solve the system using ode15s and compare the results. Then investigate if ode15s is faster or more accurate with a provided Jacobian and discuss how the solver can compute a solution even without one.
 	\end{enumerate}
 
 	\section*{Methods}
-	...
-
+	Supposing that the rod is attached to the midpoint of the mass, the equations of motion for the mass (trans.) and the rod (rot.) can be written using Newton's second law, as follows:
+	\begin{equation}
+		\begin{aligned}
+		m \ddot{x} + c \dot{x} + k x &= 0\\
+		I \ddot{\theta} + c L (\dot{x} + \dot{\theta}) + 2 k L (x + \theta) &= 0
+		\end{aligned}
+	\end{equation}
+	where $I = \frac{2}{3} m L^2$ is the rod's moment of inertia. Reducing the system to first order form and using the coordinates $\bm{x} = \begin{bmatrix} x_1 & x_2 & x_3 & x_4 \end{bmatrix}^\text{T} = \begin{bmatrix} x & \theta & \dot{x} & \dot{\theta} \end{bmatrix}^\text{T}$, the system's Jacobian can be written as:
+	\begin{equation}
+		\mathbf{J} = \begin{bmatrix}
+		0 & 0 & 1 & 0 \\
+		0 & 0 & 0 & 1 \\
+		-\frac{k}{m} & 0 & -\frac{c}{m} & 0 \\
+		-\frac{3 k}{L m} & -\frac{3 k}{L m} & -\frac{3 c}{2 L m} & -\frac{3 c}{2 L m}
+		\end{bmatrix}
+	\end{equation}
+	which is, notably, constant. The system was solved using the script \texttt{assignment5.m}, which uses the backward Euler implementation of function \texttt{bwdEuler.m}. This, in turn, uses the function \texttt{newtonRaphson.m} for solving the nonlinear equations.
+	
 	\section*{Results}
 	...
 
 	\section*{Analysis}
-	...
+	A Jacobian can be computed from the system function via numerical differentiation (e.g.~finite difference method). Thus, it is not strictly necessary to provide a Jacobian for many solvers.
 	
 \end{document}

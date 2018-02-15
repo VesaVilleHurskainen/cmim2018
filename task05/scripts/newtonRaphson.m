@@ -1,4 +1,13 @@
-function roots = newtonRaphson(fun, dfun, x0, tol, maxiter)
+function x = newtonRaphson(fun, x0, jac, tol, maxiter)
 
-iter = 0;
+x = x0;
+i = 0;
 
+while any(abs(fun(x)) > tol)
+    x = x - jac(x)\fun(x);
+    i = i+1;
+    if i >= maxiter
+        disp('newtonRaphson reached maximum number of iterations, tolerance not met!');
+        return
+    end
+end
