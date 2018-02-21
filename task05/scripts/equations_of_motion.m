@@ -4,7 +4,8 @@ syms x(t);
 syms theta(t);
 
 % Compute Lagrangian
-T = (1/2)*m*diff(x,t)^2 + (1/2)*int((2*m/L)*diff(x+y*sin(theta),t)^2,y,0,L) + (1/2)*int((2*m/L)*diff(y*cos(theta),t)^2,y,0,L);
+% T = (1/2)*m*diff(x,t)^2 + (1/2)*int((2*m/L)*diff(x+y*sin(theta),t)^2,y,0,L) + (1/2)*int((2*m/L)*diff(y*cos(theta),t)^2,y,0,L);
+T = (1/2)*m*diff(x,t)^2 + (1/2)*int((2*m/L)*diff(x+y*sin(theta),t)^2 + diff(y*cos(theta),t)^2,y,0,L);
 U = (1/2)*k*x^2 + k*(x+L*sin(theta))^2;
 Lag = simplify(T-U);
 

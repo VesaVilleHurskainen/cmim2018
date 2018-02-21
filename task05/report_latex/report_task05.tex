@@ -44,7 +44,8 @@
 	Supposing that the rod is attached to the midpoint of the mass, the equations of motion were derived using the Lagrangian method. The system's kinetic and potential energies are as follows:
 	\begin{equation}
 		\begin{aligned}
-		T = \frac{1}{2} m \dot{x}^2 + \frac{1}{2} m_L \left( \frac{d}{dt} \int_{0}^{L} (x + y \sin \theta) dy \right)^2 + \frac{1}{2} m_L \left( \frac{d}{dt} \int_{0}^{L} (y \cos \theta) dy \right)^2
+		T &= \frac{1}{2} m \dot{x}^2 + \frac{1}{2} \int_{0}^{L} m_L \left[ \left( \frac{d}{dt} (x + y \sin \theta) \right)^2 + \left( \frac{d}{dt} (y \cos \theta) \right)^2 \right] dy \\
+		U &= \frac{1}{2} k x^2 + k (x + L \sin \theta)^2
 		\end{aligned}
 	\end{equation}
 	where $m_L = 2 m / L$ is the mass per unit length. Reducing the system to first order form and using the coordinates $\bm{x} = \begin{bmatrix} x_1 & x_2 & x_3 & x_4 \end{bmatrix}^\text{T} = \begin{bmatrix} x & \theta & \dot{x} & \dot{\theta} \end{bmatrix}^\text{T}$, the system's Jacobian can be written as:
