@@ -41,14 +41,13 @@
 	\end{enumerate}
 
 	\section*{Methods}
-	Supposing that the rod is attached to the midpoint of the mass, the equations of motion for the mass (trans.) and the rod (rot.) can be written using Newton's second law, as follows: \textcolor{red}{(Incorrect; ignores constraint force. Reformulate using Lagrange equations.)}
+	Supposing that the rod is attached to the midpoint of the mass, the equations of motion were derived using the Lagrangian method. The system's kinetic and potential energies are as follows:
 	\begin{equation}
 		\begin{aligned}
-		m \ddot{x} + c \dot{x} + k x &= 0\\
-		I \ddot{\theta} + c L (\dot{x} + \dot{\theta}) + 2 k L (x + \theta) &= 0
+		T = \frac{1}{2} m \dot{x}^2 + \frac{1}{2} m_L \left( \frac{d}{dt} \int_{0}^{L} (x + y \sin \theta) dy \right)^2 + \frac{1}{2} m_L \left( \frac{d}{dt} \int_{0}^{L} (y \cos \theta) dy \right)^2
 		\end{aligned}
 	\end{equation}
-	where $I = \frac{2}{3} m L^2$ is the rod's moment of inertia. Reducing the system to first order form and using the coordinates $\bm{x} = \begin{bmatrix} x_1 & x_2 & x_3 & x_4 \end{bmatrix}^\text{T} = \begin{bmatrix} x & \theta & \dot{x} & \dot{\theta} \end{bmatrix}^\text{T}$, the system's Jacobian can be written as:
+	where $m_L = 2 m / L$ is the mass per unit length. Reducing the system to first order form and using the coordinates $\bm{x} = \begin{bmatrix} x_1 & x_2 & x_3 & x_4 \end{bmatrix}^\text{T} = \begin{bmatrix} x & \theta & \dot{x} & \dot{\theta} \end{bmatrix}^\text{T}$, the system's Jacobian can be written as:
 	\begin{equation}
 		\mathbf{J} = \begin{bmatrix}
 		0 & 0 & 1 & 0 \\
