@@ -16,7 +16,7 @@ dif2 = diff(subs(dif1,[v,omega],[diff(x,t),diff(theta,t)]),t)
 dif3 = subs(jacobian(subs(Lag,[x,theta],[xs,thetas]),[xs;thetas]),[xs,thetas],[x,theta])
 Q = subs(jacobian(c*v^2+c*(v+L*omega*cos(theta))^2,[v,omega]),[v,omega],[diff(x,t),diff(theta,t)])
 
-eq = simplify(dif2 - dif3 + c*diff(x,t) + Q)
+eq = simplify(dif2 - dif3 + Q)
 
 % Simplify for presentation
 syms xd xdd thetad thetadd real

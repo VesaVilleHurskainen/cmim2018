@@ -17,8 +17,8 @@ animate = true;
 Eqs = [x(3)
        x(4)
 [3*m, L*m*cos(x(2)); L*m*cos(x(2)), 2*L^2*m/3]\...
-(-[- L*m*sin(x(2))*x(4)^2 + 2*L*c*cos(x(2))*x(4) + 5*c*x(3) + 3*k*x(1) + 2*L*k*sin(x(2))
-c*x(3) + 2*L^2*k*cos(x(2))*sin(x(2)) + 2*L*k*cos(x(2))*x(1) + 2*L*c*cos(x(2))*(x(3) + L*x(4)*cos(x(2))) - L*m*x(4)*x(3)*sin(x(2))])];
+(- [ - L*m*sin(x(2))*x(4)^2 + 2*L*c*cos(x(2))*x(4) + 4*c*x(3) + 3*k*x(1) + 2*L*k*sin(x(2))
+ + 2*L*c*cos(x(2))*(x(3) + L*x(4)*cos(x(2))) + 2*L*k*cos(x(2))*(x(1) + L*sin(x(2))) - L*m*x(4)*x(3)*sin(x(2))])];
  
 
 % System jacobian
@@ -54,7 +54,7 @@ plot(t15_jac,x15_jac(:,1)','k-.','LineWidth',1.5);
 hold off
 grid on
 legend('Backward Euler','ode15s')
-ylabel('Response')
+ylabel('Mass position')
 formatPlot(gcf,'Times New Roman',15)
 
 % Plot difference between backward Euler and ode15s with Jacobian
@@ -64,7 +64,7 @@ hold on
 plot(tspan,x15_jac(:,2)'-xbe(2,:),'k-.','LineWidth',1.5);
 grid on
 legend('x','\theta')
-ylabel('Error')
+ylabel('Difference')
 formatPlot(gcf,'Times New Roman',15)
 
 % Plot difference between ode15s with Jacobian and without Jacobian
