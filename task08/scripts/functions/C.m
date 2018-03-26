@@ -1,4 +1,4 @@
-% Constraint vector C
+% Routine to compute constraint vector C
 function C = C(x,t,data)
 
 C = [];

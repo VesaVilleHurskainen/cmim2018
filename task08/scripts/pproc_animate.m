@@ -1,3 +1,4 @@
+% Simple animated visualization of displacements with regard to time
 function [] = pproc_animate(x,t,data)
 
 bodies = data.bodies;
@@ -19,6 +20,9 @@ for i = 1:length(t)
             plot([r1(1),r2(1)],[r1(2),r2(2)])
         end
     end
+    title(['t = ',num2str(t(i),'%2.3f')]);
     hold off
     drawnow
+end
+
 end

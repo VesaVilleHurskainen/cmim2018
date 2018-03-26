@@ -1,4 +1,5 @@
-function x = newtonRaphson(fun, x0, jac, tol, maxiter)
+% Simple implementation of Newton-Raphson method for solution of nonlinear equations.
+function [x,i] = newtonRaphson(fun, x0, jac, tol, maxiter)
 
 x = x0;
 i = 0;
