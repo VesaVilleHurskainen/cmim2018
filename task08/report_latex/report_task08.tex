@@ -22,24 +22,39 @@
 \graphicspath{{figures/}}
 
 \begin{document}
-	\section*{COMPUTATIONAL METHODS IN MECHANICS: Assignment 8}
-	Vesa-Ville Hurskainen, 26 Mar 2018\\
-	\href{https://github.com/VesaVilleHurskainen/cmim2018}{GitHub repository}
+\section*{COMPUTATIONAL METHODS IN MECHANICS: Assignment 8}
+Vesa-Ville Hurskainen, 28 Mar 2018\\
+\href{https://github.com/VesaVilleHurskainen/cmim2018}{GitHub repository}
 
-	\section*{Introduction}
-	This is a report of the eighth assignment of the course \textit{Computational Methods in Mechanics}. The assignment consists of ..., which are as follows:
-	\begin{enumerate}
-		\setlength\itemsep{0pt}
-		\item ...
-	\end{enumerate}
+\section*{Introduction}
+This is a report for the eighth assignment of the course \textit{Computational Methods in Mechanics}, concerning dynamic analysis. The assignment consists of five tasks, which are as follows:
+\begin{enumerate}
+	\setlength\itemsep{0pt}
+	\item To expand the previously-made general purpose program with dynamic analysis.
+	\item To allow the program to automatically select the appropriate type of analysis.
+	\item To solve a four-bar linkage using the program.
+	\item To test different values for Baumgarte stabilization parameters $\alpha$ and $\beta$.
+	\item To compare results with an MBD package (e.g.~MSC ADAMS).
+\end{enumerate}
 
-	\section*{Methods}
+\section*{Methods}
+The system is presented in Figure~\ref*{fig:system}.
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.4\textwidth]{system.eps}
+	\caption{Four-bar system.\label{fig:system}}
+\end{figure}
 
+Masses directly proportional to body length.
 
-	\section*{Results}
+\section*{Results}
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.6\textwidth]{constraintdrift.eps}
+	\caption{Sum of constraint drift ($\sum_{i=1}^{n} |C_i| $) with different values of Baumgarte parameters.\label{fig:constraintdrift}}
+\end{figure}
 
-	
-	\section*{Analysis}
-
+\section*{Analysis}
+asd
 
 \end{document}
