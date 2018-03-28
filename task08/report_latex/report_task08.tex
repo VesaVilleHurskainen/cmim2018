@@ -51,9 +51,7 @@ To complete task 2, the function \texttt{analyse} was written. This function aut
 
 
 \section*{Results}
-The system's dynamic behavior under gravity load was solved within the time span $t = 0 \dots 5$ s, with an output step size of $\Delta t = 0.01$ s. The system's physical parameters were defined as $m = 1$ kg and $L = 1$ m. Several different values for Baumgarte parameters $\alpha$ and $\beta$ were tested, and a comparison of the resulting values of constraint drift is presented in Figure~\ref*{fig:constraintdrift}.\\
-
-Reference results were computed using MSC ADAMS, employing identical time settings. The difference between the result sets is illustrated in Figure~\ref*{fig:comparison}.
+The system's dynamic behavior under gravity load was solved within the time span $t = 0 \dots 5$ s, with an output step size of $\Delta t = 0.01$ s. The system's physical parameters were defined as $m = 1$ kg and $L = 1$ m. Several different values for Baumgarte parameters $\alpha$ and $\beta$ were tested, and a comparison of the resulting values of constraint drift is presented in Figure~\ref*{fig:constraintdrift}. Reference results were computed using MSC ADAMS, employing identical time settings. The difference between the result sets is illustrated in Figure~\ref*{fig:comparison}.
 
 \begin{figure}[h!]
 	\centering
@@ -69,6 +67,8 @@ Reference results were computed using MSC ADAMS, employing identical time settin
 
 
 \section*{Analysis}
-asd
+Examining Figure~\ref*{fig:constraintdrift}, we can see that $\alpha = \beta = 0$ leads to an unacceptable (and growing) amount of drift. The drift is reduced when $\alpha = \beta = 1$, but the maximum value is still high. In general, we can see that greater parameter values lead to smaller amounts of constraint violation, which corresponds to the expected behavior.\\
+
+When comparing results computed using the self-written program and ADAMS (Figure~\ref*{fig:comparison}), the difference in response is found to be ...
 
 \end{document}
