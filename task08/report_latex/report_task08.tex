@@ -23,7 +23,7 @@
 
 \begin{document}
 \section*{COMPUTATIONAL METHODS IN MECHANICS: Assignment 8}
-Vesa-Ville Hurskainen, 28 Mar 2018\\
+Vesa-Ville Hurskainen, 3 Apr 2018\\
 \href{https://github.com/VesaVilleHurskainen/cmim2018}{GitHub repository}
 
 
@@ -51,24 +51,30 @@ To complete task 2, the function \texttt{analyse} was written. This function aut
 
 
 \section*{Results}
-The system's dynamic behavior under gravity load was solved within the time span $t = 0 \dots 5$ s, with an output step size of $\Delta t = 0.01$ s. The system's physical parameters were defined as $m = 1$ kg and $L = 1$ m. Several different values for Baumgarte parameters $\alpha$ and $\beta$ were tested, and a comparison of the resulting values of constraint drift is presented in Figure~\ref*{fig:constraintdrift}. Reference results were computed using MSC ADAMS, employing identical time settings. The difference between the result sets is illustrated in Figure~\ref*{fig:comparison}.
+The system's dynamic behavior under gravity load was solved within the time span $t = 0 \dots 5$ s with an output step size of $\Delta t = 0.01$ s, using the MATLAB integrated solver \texttt{ode45} with default options. The system's physical parameters were defined as $m = 1$ kg and $L = 1$ m. Several different values for Baumgarte parameters $\alpha$ and $\beta$ were tested, and a comparison of the resulting values of constraint drift is presented in Figure~\ref*{fig:constraintdrift}. Reference results were computed using MSC ADAMS, employing identical time settings. The difference between these result sets is illustrated in Figure~\ref*{fig:comparison}.
+
+
+\section*{Analysis}
+Examining Figure~\ref*{fig:constraintdrift}, we can see that $\alpha = \beta = 0$ leads to an unacceptable (and continuously growing) amount of drift. The drift is reduced when $\alpha = \beta = 1$, but the maximum value is still high. In general, we can see that greater parameter values lead to smaller amounts of constraint violation, which corresponds to expected behavior.\\
+
+When comparing results computed using the self-written program and ADAMS (Figure~\ref*{fig:comparison}), the behavior is found to be similar. However, the difference in displacement is somewhat significant, with a maximum value of over 2 cm for the investigated body. This divergence occurs even when emplying high values for Baumgarte parameters. Possible causes include:
+\begin{itemize}
+	\setlength\itemsep{0pt}
+	\item Differences in integrator settings and tolerances.
+	\item Differences in the definition of inertia for the rigid bodies.
+	\item Differences in formulation of constraints.
+\end{itemize}
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.8\textwidth]{constraintdrift.eps}
+	\includegraphics[width=0.72\textwidth]{constraintdrift.eps}
 	\caption{Sum of constraint drift ($\sum_{i=1}^{n} |C_i| $) with different values for Baumgarte parameters.\label{fig:constraintdrift}}
 \end{figure}
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.8\textwidth]{constraintdrift.eps}
-	\caption{Position error as function of time. Reference results computed using MSC ADAMS.\label{fig:comparison}}
+	\includegraphics[width=0.72\textwidth]{comparison.eps}
+	\caption{Difference in y-displacement of body 3, $y_{3,\text{ref}}-y_3$. Reference results computed using MSC ADAMS.\label{fig:comparison}}
 \end{figure}
-
-
-\section*{Analysis}
-Examining Figure~\ref*{fig:constraintdrift}, we can see that $\alpha = \beta = 0$ leads to an unacceptable (and growing) amount of drift. The drift is reduced when $\alpha = \beta = 1$, but the maximum value is still high. In general, we can see that greater parameter values lead to smaller amounts of constraint violation, which corresponds to the expected behavior.\\
-
-When comparing results computed using the self-written program and ADAMS (Figure~\ref*{fig:comparison}), the difference in response is found to be ...
 
 \end{document}
