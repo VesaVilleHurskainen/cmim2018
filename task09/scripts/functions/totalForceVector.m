@@ -1,5 +1,5 @@
 % Routine to build total force vector. Note: only gravity and point forces implemented currently.
-function Q = totalForceVector(~,x,data)
+function Q = totalForceVector(t,x,data)
 
 bodies = data.bodies;
 forces = data.forces;
@@ -14,7 +14,7 @@ for i = 1:numel(bodies)
         end
     end
     xb = x(bcoords(i));
-    Q(bcoords(i)) = Q(bcoords(i)) + bodyForceVector(bodies{i},bforces,xb,data.g);
+    Q(bcoords(i)) = Q(bcoords(i)) + bodyForceVector(t,bodies{i},bforces,xb,data.g);
 end
 
 end

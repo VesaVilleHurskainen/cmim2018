@@ -10,7 +10,7 @@ data = struct();
 
 % Define solution parameters
 data.dt = 0.01;
-t_end = 1.5;
+t_end = 1;
 data.timespan = 0:data.dt:t_end;
 data.solver = 'ode45';
 data.options = odeset;
@@ -20,24 +20,25 @@ data.abstol = 1e-6;
 data.maxiter = 1000;
 
 % Define parameters for Baumgarte stabilization
-data.alpha = 10;
-data.beta = 10;
+data.alpha = 100;
+data.beta = 100;
 
 % Define numerical parameters
 data.g = [0;0];
 L1 = 5;
 m = 1;
+F = -200;
+rhoL = 2;
 
-% Define points
+% Define points (optimized, see optimizeGrabber.m)
 pA = [0;0];
-pB = [1.6135;5.2925];
-pC = [-3.5881;1.8222];
+pB = [0.0625;6.8802];
+pC = [-2.4728;2.2935];
 pK = [9;6];
 
 % Define bodies and their initial positions
 body1.type = 'slenderRod';        % Body type
 body1.points = [pA-[L1;0],pA];    % Body initial position in global coordinates (by endpoints)
-body1.mass = m;                   % Rod mass
 
 body2.type = 'slenderRod';
 body2.points = [pB,pK];
@@ -51,13 +52,19 @@ body4.type = 'slenderRod';
 body4.points = [pB,pC];
 body4.mass = m;
 
-data.bodies = {body1,body2,body3,body4};
-
 % Calculate lenghts
 L2a = norm(pB-pK);
 L2b = norm(pA-pB);
 L3 = norm(pB-pC);
-    
+
+% Define masses
+body1.mass = rhoL*norm(body1.points(:,1)-body1.points(:,2));
+body2.mass = rhoL*norm(body2.points(:,1)-body2.points(:,2));
+body3.mass = rhoL*norm(body3.points(:,1)-body3.points(:,2));
+body4.mass = rhoL*norm(body4.points(:,1)-body4.points(:,2));
+
+data.bodies = {body1,body2,body3,body4};
+   
 % Define joint constraints
 joint1.type = 'translational';  % Joint type
 joint1.bodies = [0,1];          % Joint bodies (numbering by order in bodies, 0 = ground)
@@ -86,19 +93,10 @@ joint6.dof = 3;
 
 data.joints = {joint1,joint2,joint3,joint4,joint5,joint6};
 
-% % Define time dependent constraints and their derivatives as functions
-% % At the moment, only functions of type q_i = f(t) are implemented,
-% const_body = 1;                     % Affected body
-% const_dof = 3;                      % Affected degree of freedom of the body
-% const_expr = @(t) (pi/2)+omega*t;   % Constraint function
-% const_diff = @(t) omega;            % Constraint function time derivative
-% const_ddiff = @(t) 0;               % Function second time derivative
-% const1 = struct('body',const_body,'dof',const_dof,'expression',const_expr,'diff',const_diff,'ddiff',const_ddiff);
-
 % Define point forces
-force1.body = 1;
-force1.forcevector = [-10;0];
-force1.location = [0;0];
+force1.body = 1;                    % Affected body
+force1.forcevector = @(t) [F;0];    % Force vector (function of time)
+force1.location = [0;0];            % Effect point coordinates (body relative)
 
 data.forces = {force1};
 

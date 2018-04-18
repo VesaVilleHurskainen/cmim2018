@@ -1,4 +1,4 @@
-% Helper function for setting coordinates according to body numbers
+% Helper function to create 2 body position vectors from global pos. vec.
 function bpos = bodypos(bodies,x)
 
 if bodies(1) == 0
