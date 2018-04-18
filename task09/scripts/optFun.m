@@ -1,8 +1,7 @@
-% MBD study code input file, grabber dynamics
-% April 2018, Vesa-Ville Hurskainen
+% Function for grabber optimization
+function f = optFun(xx)
 
-% Initialize struct
-clear
+% Clear old data and initialize struct
 data = struct();
 
 
@@ -10,7 +9,7 @@ data = struct();
 
 % Define solution parameters
 data.dt = 0.01;
-t_end = 1.5;
+t_end = 3;
 data.timespan = 0:data.dt:t_end;
 data.solver = 'ode45';
 data.options = odeset;
@@ -27,11 +26,12 @@ data.beta = 10;
 data.g = [0;0];
 L1 = 5;
 m = 1;
+F = -10;
 
-% Define points
+% Define points from arguments
 pA = [0;0];
-pB = [1.6135;5.2925];
-pC = [-3.5881;1.8222];
+pB = xx(1:2);
+pC = xx(3:4);
 pK = [9;6];
 
 % Define bodies and their initial positions
@@ -86,18 +86,9 @@ joint6.dof = 3;
 
 data.joints = {joint1,joint2,joint3,joint4,joint5,joint6};
 
-% % Define time dependent constraints and their derivatives as functions
-% % At the moment, only functions of type q_i = f(t) are implemented,
-% const_body = 1;                     % Affected body
-% const_dof = 3;                      % Affected degree of freedom of the body
-% const_expr = @(t) (pi/2)+omega*t;   % Constraint function
-% const_diff = @(t) omega;            % Constraint function time derivative
-% const_ddiff = @(t) 0;               % Function second time derivative
-% const1 = struct('body',const_body,'dof',const_dof,'expression',const_expr,'diff',const_diff,'ddiff',const_ddiff);
-
-% Define point forces
+% Define point force
 force1.body = 1;
-force1.forcevector = [-10;0];
+force1.forcevector = [F;0];
 force1.location = [0;0];
 
 data.forces = {force1};
@@ -107,8 +98,18 @@ data.forces = {force1};
 
 % BEGIN SOLUTION
 
-% Solve kinematics
-[x,xd,t,data] = analyse(data);
+% Solve
+[xdata,t] = analyse(data);
 
-% Visualize results
-pproc_animate(x,t,data);
+% Calculate f = xK_max - xK_min
+x2 = xdata(bcoords(2),:);
+xK = zeros(2,length(t));
+for i = 1:length(t)
+    xK(:,i) = x2(1:2,i) + [cos(x2(3,i)) -sin(x2(3,i)); sin(x2(3,i)) cos(x2(3,i))]*[L3/2;0];
+    if xK(2,i) < 0
+        xK(:,i:end) = [];
+        break
+    end
+end
+
+f = max(xK(1,:))-min(xK(1,:));

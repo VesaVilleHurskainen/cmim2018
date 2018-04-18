@@ -14,6 +14,8 @@ for j = 1:numel(joints)
         Ct = [Ct; zeros(2,1)];
     elseif strcmp(jtype,'translational')
         Ct = [Ct; zeros(2,1)];
+    elseif strcmp(jtype,'1DOF')
+        Ct = [Ct; 0];
     end
 end
 
