@@ -1,4 +1,4 @@
-% MBD study code input file, grabber dynamics
+% MBD study code input file, grabber dynamics, optimized full model
 % April 2018, Vesa-Ville Hurskainen
 
 % Initialize struct
@@ -27,14 +27,24 @@ data.beta = 100;
 data.g = [0;0];
 L1 = 5;
 m = 1;
-F = -200;
+F = -400;
 rhoL = 2;
 
-% Define points (optimized, see optimizeGrabber.m)
+% Define points
 pA = [0;0];
-pB = [0.0625;6.8802];
-pC = [-2.4728;2.2935];
 pK = [9;6];
+
+% Unoptimized
+pB = [2;4];
+pC = [-3;4];
+
+% Optimized
+% pB = [0.0687;6.6047];
+% pC = [-3.0713;1.2103];
+
+pBl = [pB(1);-pB(2)];
+pCl = [pC(1);-pC(2)];
+pKl = [pK(1);-pK(2)];
 
 % Define bodies and their initial positions
 body1.type = 'slenderRod';        % Body type
@@ -42,15 +52,21 @@ body1.points = [pA-[L1;0],pA];    % Body initial position in global coordinates 
 
 body2.type = 'slenderRod';
 body2.points = [pB,pK];
-body2.mass = m;
 
 body3.type = 'slenderRod';
 body3.points = [pA,pB];
-body3.mass = m;
 
 body4.type = 'slenderRod';
 body4.points = [pB,pC];
-body4.mass = m;
+
+body5.type = 'slenderRod';
+body5.points = [pBl,pKl];
+
+body6.type = 'slenderRod';
+body6.points = [pA,pBl];
+
+body7.type = 'slenderRod';
+body7.points = [pBl,pCl];
 
 % Calculate lenghts
 L2a = norm(pB-pK);
@@ -58,12 +74,16 @@ L2b = norm(pA-pB);
 L3 = norm(pB-pC);
 
 % Define masses
-body1.mass = rhoL*norm(body1.points(:,1)-body1.points(:,2));
-body2.mass = rhoL*norm(body2.points(:,1)-body2.points(:,2));
-body3.mass = rhoL*norm(body3.points(:,1)-body3.points(:,2));
-body4.mass = rhoL*norm(body4.points(:,1)-body4.points(:,2));
+body1.mass = rhoL*L1;
+body2.mass = rhoL*L2a;
+body3.mass = rhoL*L2b;
+body4.mass = rhoL*L3;
+body5.mass = rhoL*L2a;
+body6.mass = rhoL*L2b;
+body7.mass = rhoL*L3;
 
-data.bodies = {body1,body2,body3,body4};
+
+data.bodies = {body1,body2,body3,body4,body5,body6,body7};
    
 % Define joint constraints
 joint1.type = 'translational';  % Joint type
@@ -91,7 +111,27 @@ joint6.type = '1DOF';
 joint6.bodies = [2,3];
 joint6.dof = 3;
 
-data.joints = {joint1,joint2,joint3,joint4,joint5,joint6};
+joint7.type = 'revolute';
+joint7.bodies = [1,6];
+joint7.positions = [[L1/2;0],[-L2b/2;0]];
+
+joint8.type = 'revolute';
+joint8.bodies = [6,5];
+joint8.positions = [[L2b/2;0],[-L2a/2;0]];
+
+joint9.type = 'revolute';
+joint9.bodies = [6,7];
+joint9.positions = [[L2b/2;0],[-L3/2;0]];
+
+joint10.type = 'revolute';
+joint10.bodies = [7,0];
+joint10.positions = [[L3/2;0],pCl];
+
+joint11.type = '1DOF';
+joint11.bodies = [5,6];
+joint11.dof = 3;
+
+data.joints = {joint1,joint2,joint3,joint4,joint5,joint6,joint7,joint8,joint9,joint10,joint11};
 
 % Define point forces
 force1.body = 1;                    % Affected body

@@ -27,7 +27,6 @@ data.beta = 100;
 % Define numerical parameters
 data.g = [0;0];
 L1 = 5;
-m = 1;
 F = -200;
 rhoL = 2;
 
@@ -43,15 +42,12 @@ body1.points = [pA-[L1;0],pA];    % Body initial position in global coordinates 
 
 body2.type = 'slenderRod';
 body2.points = [pB,pK];
-body2.mass = m;
 
 body3.type = 'slenderRod';
 body3.points = [pA,pB];
-body3.mass = m;
 
 body4.type = 'slenderRod';
 body4.points = [pB,pC];
-body4.mass = m;
 
 % Calculate lenghts
 L2a = norm(pB-pK);

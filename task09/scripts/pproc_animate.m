@@ -17,7 +17,7 @@ for i = 1:length(t)
         if strcmp(body.type,'slenderRod')
             r1 = [xb(1);xb(2)] + [cos(xb(3)) -sin(xb(3)); sin(xb(3)) cos(xb(3))]*[-body.length/2;0];
             r2 = [xb(1);xb(2)] + [cos(xb(3)) -sin(xb(3)); sin(xb(3)) cos(xb(3))]*[body.length/2;0];
-            plot([r1(1),r2(1)],[r1(2),r2(2)])
+            plot([r1(1),r2(1)],[r1(2),r2(2)],'LineWidth',2)
         end
     end
     title(['t = ',num2str(t(i),'%2.3f')]);

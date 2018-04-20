@@ -11,8 +11,11 @@ ub = [4 7 -1 4]';
 lb = [0 4 -5 1]';
 
 % Set optimization options
-opts = optimoptions('fmincon', 'Algorithm', 'interior-point');
+% opts = optimoptions('fmincon', 'Algorithm', 'interior-point','MaxFunctionEvaluations',1000);
+% opts = optimoptions('fmincon', 'Algorithm', 'sqp','MaxFunctionEvaluations',1000);
+opts = optimoptions('fmincon', 'Algorithm', 'active-set','MaxFunctionEvaluations',1000);
 
 % Optimize
-x = fmincon(@optFun,x0,[],[],[],[],lb,ub,[],opts);
+[x,fval,exitflag,output] = fmincon(@optFun,x0,[],[],[],[],lb,ub,[],opts);
 disp(x)
+disp(output)
